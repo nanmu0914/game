@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <windows.h>
-#include <time.h> 
-#include <stdio.h>                          //里规格：长39*2=78 （真坐标）(假坐标宽为39)  高39
+#include <time.h>
+#include <mmsystem.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <windows.h>                              //里规格：长39*2=78 （真坐标）(假坐标宽为39)  高39
                            //外规格：长41*2=82 （真坐标）(假坐标宽为41)  高41
 #define UP    1
 #define DOWN  2
@@ -10,6 +13,16 @@
 #define MAX_LEVEL 8
 #define BULLET_NUM 20
 #define MAX_LIFE 4
+#define High 20  //载入界面大小
+#define Width 30
+
+#pragma comment(lib,"Winmm.lib")
+
+
+
+
+
+
 
 
 //程序中未写入函数参数表中且未说明的变量只有map二维数组,level_info数组和level   
@@ -27,8 +40,6 @@
  coord横坐标既指GoTo函数中的x参数,因为本程序游戏界面以一个■长度为基本单位，                    
                                                                                                   
  可以说涉及的coord横坐标全是偶数。既假坐标要变真坐标（变真坐标才能发挥真正作用），横坐标须乘以2                                    
-
-
                                                            
 */
 typedef struct             //这里的出现次序指的是一个AI_tank变量中的次序，游戏共有四个AI_tank变量
@@ -37,7 +48,6 @@ int fast_tank_order;   //fast_tank出现的次序(在第fast_tank_order次复活出现,从第0
 int firm_tank_order;   //firm_tank出现的次序，同上
 } LevInfo;                 //关卡信息(准确说是该关出现的坦克信息)
 LevInfo level_info [MAX_LEVEL] = {{-1,-1},{3,-1},{-1,3},{2,3},{2,3},{2,3},{2,3},{2,3}};   //初始化，-1代表没有该类型坦克
-
 
 
 
@@ -69,6 +79,14 @@ bool alive;     //存活为1，不存活为0
 }  Tank;
 Tank AI_tank[4] , my_tank;  //my_tank为我的坦克，Ai_tank 代表AI坦克
 
+void gotoxy(int x,int y)  //光标移动到(x,y)位置
+{
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD pos;
+    pos.X = x;
+    pos.Y = y;
+    SetConsoleCursorPosition(handle,pos);
+}
 
 //∵所有的函数都有可能对全局变量map进行读写(改变)，
 //∴函数中不另说明是否会对全局变量map读写
@@ -87,6 +105,7 @@ void GameOver( bool home );  //游戏结束
 void ClearMainScreen();      //主屏幕清屏函数∵system("cls")后打印框架有一定几率造成框架上移一行的错误∴单独编写清屏函数
 void ColorChoose(int color); //颜色选择函数
 void NextLevel();            //下一关(含有对level全局变量的读写)
+
 
 
 //子弹部分
@@ -112,7 +131,7 @@ int  AIPositionCheak (int position);           //检测AI坦克建立位置是否有障碍物A
 
 //DWORD WINAPI InputX(LPVOID lpParameter); //声明线程函数，用于检查X键输入并设置X键的输入冷却时间
 
-
+void playMusic(); //播放背景音乐
 
 
 //注意map数组应是纵坐标在前，横坐标在后，既map[y][x]，(∵数组行长度在前，列长度在后)
@@ -129,7 +148,8 @@ int speed=7;      //游戏速度,调整用
 int level=1;      //游戏关卡数
 int score=0;      //游戏分数
 int remain_enemy; //剩余敌人(未出现的敌人)
-
+//局部
+int canvas[High][Width] = {0};
 
 char* tank_figure[4][3][4]=
 {
@@ -160,26 +180,46 @@ char* tank_figure[4][3][4]=
 
 
 
-void main ()                               //主函数
+int main ()                               //主函数
 {
-int x=1;
+
 int i;
-	while(x<=4)
-{
-printf("x=%d\n",x);
-if (x==3)
-{
-break;
-}
-x++;
-}//游戏界面的跳转
-	Sleep(2000); 
+		int j;
+		canvas[High/2][Width/2] = 1;	
+		
+		// 数据初始化	
+	while (1) //  游戏循环执行
+	{
+		gotoxy(0,0);  // 光标移动到原点位置，以下重画清屏
+
+	for (i=0;i<High;i++)
+	{
+		for (j=0;j<Width;j++)
+		{
+			if (canvas[i][j]==0)
+				printf(" ");   //   输出空格
+		/*	else if (canvas[i][j]==-1)
+				printf("#"); */  //   输出边框#
+			else if (canvas[i][j]==1)
+				printf("欢迎来到坦克世界");   //   输出蛇头@
+		
+		}
+		printf("\n");
+	
+	} 
+		break;
+	}
+	Sleep(600);
+
 unsigned int interval[12]={1,1,1,1,1,1,1,1,1,1,1,1} ;  //间隔计数器数组，用于控制速度
 srand(time(NULL)); //设置随机数种子(若不设置种子而调用rand会使每次运行的随机数序列一致)随机数序列指:如首次调用rand得到1,第二次得2,第三次3,则此次随机数序列为1,2,3
 HideCursor();                         //隐藏光标
 system("mode con cols=112 lines=42"); //控制窗口大小
 Frame ();                             //打印游戏主体框架
-Initialize();                         //初始化，全局变量level初值便是1 
+Initialize();                        //初始化，全局变量level初值便是1 
+
+playMusic();
+
 // HANDLE h1 , h2 ;                      //定义句柄变量
 for(;;)
 {
@@ -210,7 +250,7 @@ if(my_tank.alive && interval[10]++%2==0 )
 }
 Sleep(5);
 }
-//return 0;
+return 0;
 }
 
 
@@ -1538,4 +1578,12 @@ printf("%d ",remain_enemy);
 GoToxy(100,13);                      //在副屏幕上打印状态
 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN);
 printf("正在游戏");
+}
+
+
+void playMusic()
+{
+	//mciSendString("open \res\\bm.mp3\ alisa mymusic", NULL, 0, NULL);//播放
+	mciSendString("open \"res\\bm.mp3\" alias bkmusic", NULL, 0, NULL);
+	mciSendString("play bkmusic repeat", NULL, 0, NULL); //循环播放音乐
 }
