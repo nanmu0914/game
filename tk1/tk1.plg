@@ -1,0 +1,53 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: tk1 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1.DES\AppData\Local\Temp\RSP2487.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/tk1.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+"E:\c游戏包\tk1\tk1.cpp"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1.DES\AppData\Local\Temp\RSP2487.tmp" 
+<h3>Output Window</h3>
+Compiling...
+tk1.cpp
+E:\c游戏包\tk1\tk1.cpp(359) : error C2065: 'tank1' : undeclared identifier
+E:\c游戏包\tk1\tk1.cpp(359) : error C2227: left of '->x' must point to class/struct/union
+E:\c游戏包\tk1\tk1.cpp(359) : error C2227: left of '->x' must point to class/struct/union
+E:\c游戏包\tk1\tk1.cpp(799) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(799) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(799) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(799) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(799) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(799) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(804) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(804) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(804) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(804) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(804) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(804) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(809) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(809) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(809) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(809) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(809) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(809) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(814) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(814) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(814) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(814) : error C2228: left of '.x' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(814) : error C2228: left of '.y' must have class/struct/union type
+E:\c游戏包\tk1\tk1.cpp(814) : error C2228: left of '.x' must have class/struct/union type
+执行 cl.exe 时出错.
+
+
+
+<h3>Results</h3>
+tk1.obj - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
